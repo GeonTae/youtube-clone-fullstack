@@ -1,4 +1,6 @@
 extends ../base
+include ../mixins/video
 
 block content 
-    h1=user.username
+    each video in user.videos 
+        +video(video)
