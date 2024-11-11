@@ -1,0 +1,159 @@
+import { format } from "morgan";
+import Video from "../models/Video";
+
+//home router
+//callback way example
+// export const home = (req, res) => {
+//   console.log("start")
+//   Video.find({})
+//     .then((videos) => {
+//       console.log("videos:", videos);
+//       return res.render("home", { pageTitle: "Home", videos: videos });
+//     })
+//     .catch((error) => {
+//       console.log("errors", error);
+//     });
+//   console.log("finished")
+// };
+
+// start -> finished -> video
+//callback doesn't wait
+
+//home router
+//=======================================================
+export const home = async (req, res) => {
+  // console.log("start")
+  const videos = await Video.find({}).sort({ createdAt: "desc" }); // await makes wait until getting database
+  // console.log(videos);
+  // console.log("finished")
+  return res.render("home", { pageTitle: "Home", videos: videos });
+};
+// start -> videos -> finished
+
+//=======================================================
+//video router
+//=======================================================
+// export const see = (req, res) => res.send("See");
+export const watch = async (req, res) => {
+  // const id =req.params.id;
+  const { id } = req.params; //from url id
+  // console.log("show video:", id);
+  const video = await Video.findById(id);
+  if (!video) {
+    //video === null
+    return res.render("404", { pageTitle: "Video not found." });
+  }
+  return res.render("videos/watch", { pageTitle: video.title, video });
+};
+
+//=======================================================
+// getEdit: painting the form. postEdit: saving the changes
+//=======================================================
+export const getEditVideo = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
+    //video === null
+    return res.status(404).render("404", { pageTitle: "Video not found." });
+  }
+  return res.render("videos/edit-video", {
+    pageTitle: `Edit ${video.title}`,
+    video,
+  });
+};
+// ----------------------------------------------------------
+export const postEditVideo = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, hashtags } = req.body;
+  // const video = await Video.findById(id);  // get whole video info
+  const video_exist = await Video.exists({ _id: id }); //return boolean
+  // _id = db has this name. id is the id we requested
+  if (!video_exist) {
+    //video === null
+    return res.status(404).render("404", { pageTitle: "Video not found." });
+  }
+  // video.title = title;
+  // video.description = description;
+  await Video.findByIdAndUpdate(id, {
+    title,
+    description,
+    hashtags: Video.formatHashtags(hashtags),
+  });
+  // await video.save();
+  return res.redirect(`/videos/${id}`); //goto the website again
+};
+
+//=======================================================
+//upload
+//=======================================================
+
+export const getUpload = (req, res) => {
+  return res.render("videos/upload", { pageTitle: "Upload Video" });
+};
+// ----------------------------------------------------------
+export const postUpload = async (req, res) => {
+  const {
+    user: { _id },
+  } = req.session;
+  const { path: videoUrl } = req.file; //bring path from req.file and name as videoUrl
+  const { title, description, hashtags } = req.body;
+  // const video = new Video({
+  // });
+  // await video.save();
+  try {
+    await Video.create({
+      title,
+      description,
+      videoUrl,
+      owner: _id,
+      hashtags: Video.formatHashtags(hashtags),
+      meta: {
+        views: 0,
+        rating: 0,
+      },
+    });
+    return res.redirect("/");
+  } catch (error) {
+    console.log(error);
+    return res.status(400).render("videos/upload", {
+      pageTitle: "Upload Video",
+      errorMessage: error._message,
+    });
+  }
+};
+//`new` just creates an instance of a class.
+// `create` will actually put the data on the DB.
+
+//=======================================================
+//=======================================================
+
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  await Video.findByIdAndDelete(id);
+  // Video.findOneAndDelete({_id: id});
+  return res.redirect("/");
+};
+
+//=======================================================
+//=======================================================
+
+export const search = async (req, res) => {
+  const { keyword } = req.query;
+  let videos = [];
+  if (keyword) {
+    videos = await Video.find({
+      title: {
+        $regex: new RegExp(keyword, "i"),
+        //mongoDB Operator
+        //i is for containing both lower, upper cases
+        // for contain-start: `^${keword}`
+        // for contain-end: `${keyword}$'
+      },
+    });
+  }
+  return res.render("videos/search", { pageTitle: "Search", videos });
+};
+
+// 라우터로 지정한 :id -> req.params
+// pug파일에서 input으로 받은 내용 -> req.body(form이 POST일 때)
+// pug파일에서 input으로 받은 url내용 -> req.query (form이 GET일 때)

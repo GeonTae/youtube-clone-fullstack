@@ -1,0 +1,41 @@
+extends base
+include mixins/video
+
+block content 
+    each video in videos
+        +video(video)
+    else
+        li Sorry nothing found.
+
+
+
+
+
+
+
+
+
+//- doctype html 
+//- html(lang="en")
+//-     head 
+//-         title Youtube 
+//-     body
+//-         h1 Welcome to Youtube 
+//-     include partials/footer.pug
+
+
+//- <!DOCTYPE html>
+//- <html lang="en">
+//-   <head>
+//-     <title>Pug</title>
+//-     <script type="text/javascript">
+//-     </script>
+//-   </head>
+//-   <body>
+//-     <h1>Pug - node template engine</h1>
+//-     <div id="container" class="col">
+//-       <p>You are amazing</p>
+//-       <p>Pug is a terse and simple templating language with a strong focus on performance and powerful features.</p>
+//-     </div>
+//-   </body>
+//- </html>

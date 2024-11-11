@@ -1,0 +1,13 @@
+extends ../base
+
+
+
+block content
+    h4 Update Video
+    //- form(action="/save-changes", method="GET")
+    form(method="POST")
+        input(name="title" placeholder="Video Title", value=video.title, required, type="text", maxlength=80)
+        input(name="description" placeholder="Description", value=video.description required, type="text", minlength=20)
+        input(name="hashtags" placeholder="Hashtags, seperated by comma.", value=video.hashtags.join(), required, type="text")
+        input(value="Save", type="submit")
+    //- Get => search, Post => sending changed data or file

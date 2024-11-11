@@ -18,7 +18,7 @@ Cloning Youtube with Vanilla and NodeJS
 
 # youtube Reladed
 
-Global Router
+Root Router
 / -> Home
 /join -> Join
 /login -> Login

@@ -1,0 +1,16 @@
+extends ../base
+
+
+block content
+    //- ternary operator
+    //- h3 #{video.views} #{video.views === 1 ? "view" : "views" }
+    video(src="/"+video.videoUrl, controls, autoplay,  style="width: 20%;")
+    div
+        p=video.description
+        small=video.createdAt
+    a(href=`${video.id}/edit`) Edit video &rarr;
+    br
+    a(href=`${video.id}/delete`) Delete video &rarr;
+    //-  &rarr: right arrow, &larr: left arrow
+    //-  relative url: edit => videos/edit 
+    //-  absolute url: /edit => /edit
