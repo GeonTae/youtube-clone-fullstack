@@ -51,6 +51,16 @@ Cloning Youtube with Vanilla and NodeJS
 - `AWS S3`
 - `Heroku`
 
+| Front-end                          | Back-end                           | Deploy        |
+| ---------------------------------- | ---------------------------------- | ------------- |
+| - `HTML`                           | - `NodeJS`                         | - `AWS S3`    |
+| - `CSS`                            | - `Express`                        | - `Heroku`    |
+| - `Typescript`                     | - `MongoDB`                        |               |
+| - `Pug`                            | - `Mongoose`                       |               |
+| - `SCSS`                           | - `Bcrypt`                         |               |
+| - `Webpack`                        | - `Multer`                         |               |
+|                                    | - `FFmpeg`                         |               |
+
 # youtube Reladed
 
 Root Router
