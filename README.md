@@ -26,7 +26,7 @@ Cloning Youtube with Vanilla and NodeJS
 <table>
   <tr>
     <td style="vertical-align: top;">
-      
+
 ### Front-end
 
 - `HTML`
@@ -35,9 +35,10 @@ Cloning Youtube with Vanilla and NodeJS
 - `Pug`
 - `SCSS`
 - `Webpack`
-</td>
-<td style="vertical-align: top;">
-  
+
+    </td>
+    <td style="vertical-align: top;">
+
 ### Back-end
 
 - `NodeJS`
@@ -47,9 +48,10 @@ Cloning Youtube with Vanilla and NodeJS
 - `Bcrypt`
 - `Multer`
 - `FFmpeg`
-</td>
-<td style="vertical-align: top;">
-  
+
+    </td>
+    <td style="vertical-align: top;">
+
 ### Deploy
 
 - `AWS S3`
