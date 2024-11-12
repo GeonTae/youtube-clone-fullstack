@@ -26,7 +26,6 @@ Cloning Youtube with Vanilla and NodeJS
 <table>
   <tr>
     <td>
-      
 ### Front-end
 
 - `HTML`
@@ -37,7 +36,6 @@ Cloning Youtube with Vanilla and NodeJS
 - `Webpack`
 </td>
 <td>
-
 ### Back-end
 
 - `NodeJS`
@@ -49,7 +47,6 @@ Cloning Youtube with Vanilla and NodeJS
 - `FFmpeg`
 </td>
 <td>
-  
 ### Deploy
 
 - `AWS S3`
