@@ -24,7 +24,6 @@ Cloning Youtube with Vanilla and NodeJS
 
 ## Built with
 
----
 
 | Front-end                          | Back-end                           | Deploy        |
 | ---------------------------------- | ---------------------------------- | ------------- |
