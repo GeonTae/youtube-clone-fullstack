@@ -16,10 +16,10 @@ const loggerMiddleware = morgan("dev");
 //view === like html. what user see
 app.set("view engine", "pug"); //view engine
 app.set("views", process.cwd() + "/src/views"); //setting route that views is in src
-//midware
+//middleware
 app.use(loggerMiddleware);
 app.use(express.urlencoded({ extended: true })); //help understanding to transform form value into JS value
-//session midware => remembering everything
+//session middleware => remembering everything
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
@@ -37,6 +37,7 @@ app.use(
 app.use(localsMiddleware);
 //router
 app.use("/uploads", express.static("uploads")); //expose folder
+app.use("/static", express.static("assets")); //first: url name, second: folder name
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);

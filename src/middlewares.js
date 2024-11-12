@@ -29,8 +29,8 @@ export const publicOnlyMiddleware = (req, res, next) => {
     return res.redirect("/");
   }
 };
-import multer from "multer";
 
+import multer from "multer";
 export const uploadFilesMiddleware = multer({
   dest: "uploads/",
 });
