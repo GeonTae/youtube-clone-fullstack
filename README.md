@@ -16,6 +16,27 @@ Cloning Youtube with Vanilla and NodeJS
 - [x] Edit Video
 - [x] Multer Upload to AWS S3
 
+---
+
+## Table of contents
+
+- [Built with](#built-with)
+
+## Built with
+
+
+| Front-end                          | Back-end                           | Deploy        |
+| ---------------------------------- | ---------------------------------- | ------------- |
+| - `HTML`                           | - `NodeJS`                         | - `AWS S3`    |
+| - `CSS`                            | - `Express`                        | - `Heroku`    |
+| - `Typescript`                     | - `MongoDB`                        |               |
+| - `Pug`                            | - `Mongoose`                       |               |
+| - `SCSS`                           | - `Bcrypt`                         |               |
+| - `Webpack`                        | - `Multer`                         |               |
+|                                    | - `FFmpeg`                         |               |
+
+---
+
 # youtube Reladed
 
 Root Router
