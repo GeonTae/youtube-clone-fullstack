@@ -24,7 +24,9 @@ import User from "../models/User";
 //=======================================================
 export const home = async (req, res) => {
   // console.log("start")
-  const videos = await Video.find({}).sort({ createdAt: "desc" }); // await makes wait until getting database
+  const videos = await Video.find({})
+    .sort({ createdAt: "desc" })
+    .populate("owner"); // await makes wait until getting database
   // console.log(videos);
   // console.log("finished")
   return res.render("home", { pageTitle: "Home", videos: videos });
@@ -187,7 +189,7 @@ export const search = async (req, res) => {
         // for contain-start: `^${keword}`
         // for contain-end: `${keyword}$'
       },
-    });
+    }).populate("owner");
   }
   return res.render("videos/search", { pageTitle: "Search", videos });
 };
