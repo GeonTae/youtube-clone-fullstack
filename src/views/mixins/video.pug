@@ -5,7 +5,7 @@ mixin video(video)
             span.video-mixin__title=video.title
             div.video-mixin__meta
                 span #{video.owner.name} • 
-                span #{video.meta.views} views
+                span #{video.meta.views} #{video.meta.views === 0 || video.meta.views === 1  ? "view" : "views" }
         //- h4
         //-     a(href=`/videos/${video.id}`)=video.title
             //- a(href="/videos/" + video.id)=video.title
@@ -15,3 +15,6 @@ mixin video(video)
         //-         li=hashtag
         //- small=video.createdAt
         //- hr
+
+
+        //- #{video.views} #{video.views === 1 ? "view" : "views" }
