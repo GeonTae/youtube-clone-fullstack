@@ -3,8 +3,8 @@ extends ../base
 
 block content
     //- ternary operator
-    //- h3 #{video.views} #{video.views === 1 ? "view" : "views" }
-    div#videoContainer
+    //- h3 #{video.vie(ws} #{video.views === 1 ? "view" : "views" }
+    div#videoContainer(data-id=video._id)
         //- video(src="/"+video.videoUrl, controls, autoplay,  style="width: 50%;")
         video(src="/"+video.videoUrl, autoplay)
         div#videoControls.videoControls
@@ -15,7 +15,7 @@ block content
                     span#currentTime 00:00
                     span  / 
                     span#totalTime 00:00
-            input(type="range" , value=0, min="0", step="0.5")#timeline
+            input(type="range" , value=0, min=0, step=0.5)#timeline
 
             div.videoControls__volume
                 input(type="range" , value=0.5, min="0", max="1", step="0.1")#volume

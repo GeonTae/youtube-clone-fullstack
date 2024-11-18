@@ -197,3 +197,14 @@ export const search = async (req, res) => {
 // 라우터로 지정한 :id -> req.params
 // pug파일에서 input으로 받은 내용 -> req.body(form이 POST일 때)
 // pug파일에서 input으로 받은 url내용 -> req.query (form이 GET일 때)
+
+export const registerView = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  video.meta.views = video.meta.views + 1;
+  await video.save();
+  return res.sendStatus(200);
+};
