@@ -129,11 +129,20 @@ const handleMouseLeave = () => {
   controlsTimeout = setTimeout(hideControls, 3000); //3000ms => 3s
 };
 
+const changeVideoTime = (seconds) => {
+  video.currentTime += seconds;
+};
+
+queueMicrotask;
 const handlePressKey = (event) => {
   if (event.key === "m") {
     handleMuteClick();
   }
-  if (event.key === "f") {
+  const fullScreenCheck = document.fullscreenElement;
+  if (!fullScreenCheck && event.key === "f") {
+    handleFullScreen();
+  }
+  if (fullScreenCheck && event.code === "Esc") {
     handleFullScreen();
   }
   if (event.code === "Space") {
@@ -147,6 +156,11 @@ const handlePressKey = (event) => {
   }
 };
 
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, { method: "POST" });
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMuteClick);
 // video.addEventListener("pause", handlePause);
@@ -155,11 +169,9 @@ volumeRange.addEventListener("input", handleVolumeChange);
 video.addEventListener("loadedmetadata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("click", handlePlayClick); // play & pause when clicking video too
+video.addEventListener("ended", handleEnded); //for updating views count
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
 document.addEventListener("keydown", handlePressKey);
-
-// put mouse on bar => keep staying
-// Eventlistener "keydown" 을 통해 단축키 만들수 있어요! (space = play, m || M = mute, f||F = full screen)
