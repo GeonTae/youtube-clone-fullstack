@@ -22,6 +22,7 @@ const downloadFile = (fileUrl, fileName) => {
 };
 
 const handleDownload = async () => {
+  video.loop = false;
   actionBtn.removeEventListener("click", handleDownload);
   actionBtn.innerText = "Transcoding...";
   actionBtn.disabled = true;
@@ -68,24 +69,26 @@ const handleDownload = async () => {
     track.stop();
   });
   stream = null;
-//   video.remove();
+  //   video.remove();
 
   actionBtn.disabled = false;
   actionBtn.innerText = "Record Again";
   actionBtn.addEventListener("click", preview);
 };
 
-const handleStop = () => {
-  actionBtn.innerText = "Download Recording";
-  actionBtn.removeEventListener("click", handleStop);
-  actionBtn.addEventListener("click", handleDownload);
-  recorder.stop();
-};
+// const handleStop = () => {
+//   actionBtn.innerText = "Download Recording";
+//   actionBtn.removeEventListener("click", handleStop);
+//   actionBtn.addEventListener("click", handleDownload);
+//   recorder.stop();
+// };
 
 const handleStart = () => {
-  actionBtn.innerText = "Stop Recording";
+  //   actionBtn.innerText = "Stop Recording";
+  actionBtn.innerText = "Recording";
+  actionBtn.disabled = true;
   actionBtn.removeEventListener("click", handleStart);
-  actionBtn.addEventListener("click", handleStop);
+  //   actionBtn.addEventListener("click", handleStop);
 
   //   recorder = new MediaRecorder(stream, { mimeType: "video/mp4" });
   recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
@@ -95,14 +98,20 @@ const handleStart = () => {
     video.src = videoFile;
     video.loop = true;
     video.play();
+    actionBtn.innerText = "Download";
+    actionBtn.disabled = false;
+    actionBtn.addEventListener("click", handleDownload);
   };
   recorder.start();
+  setTimeout(() => {
+    recorder.stop();
+  }, 5000);
 };
 
 const preview = async () => {
   stream = await navigator.mediaDevices.getUserMedia({
     audio: false,
-    video: { width: 800, height: 400 },
+    video: { width: 1024, height: 576 },
   });
   video.srcObject = stream;
   video.play();
