@@ -3,24 +3,6 @@ import Video from "../models/Video";
 import User from "../models/User";
 
 //home router
-//callback way example
-// export const home = (req, res) => {
-//   console.log("start")
-//   Video.find({})
-//     .then((videos) => {
-//       console.log("videos:", videos);
-//       return res.render("home", { pageTitle: "Home", videos: videos });
-//     })
-//     .catch((error) => {
-//       console.log("errors", error);
-//     });
-//   console.log("finished")
-// };
-
-// start -> finished -> video
-//callback doesn't wait
-
-//home router
 //=======================================================
 export const home = async (req, res) => {
   // console.log("start")
@@ -85,6 +67,7 @@ export const postEditVideo = async (req, res) => {
   const { title, description, hashtags } = req.body;
   // const video = await Video.findById(id);  // get whole video info
   const video = await Video.exists({ _id: id }); //return boolean
+  // const video = await Video.findById(id);
   // _id = db has this name. id is the id we requested
   if (!video) {
     //video === null
@@ -102,6 +85,7 @@ export const postEditVideo = async (req, res) => {
     hashtags: Video.formatHashtags(hashtags),
   });
   // await video.save();
+  req.flash("success", "Changed saved.")
   return res.redirect(`/videos/${id}`); //goto the website again
 };
 
@@ -216,3 +200,21 @@ export const registerView = async (req, res) => {
   await video.save();
   return res.sendStatus(200);
 };
+
+//home router
+//callback way example
+// export const home = (req, res) => {
+//   console.log("start")
+//   Video.find({})
+//     .then((videos) => {
+//       console.log("videos:", videos);
+//       return res.render("home", { pageTitle: "Home", videos: videos });
+//     })
+//     .catch((error) => {
+//       console.log("errors", error);
+//     });
+//   console.log("finished")
+// };
+
+// start -> finished -> video
+//callback doesn't wait
