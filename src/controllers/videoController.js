@@ -68,6 +68,7 @@ export const getEditVideo = async (req, res) => {
   // console.log(typeof video.owner, typeof _id); // object , string
   //to allow accessing only for the video owner
   if (String(video.owner) !== String(_id)) {
+    req.flash("error", "You are not the owner of the video");
     return res.status(403).redirect("/");
   }
   return res.render("videos/edit-video", {
@@ -90,6 +91,7 @@ export const postEditVideo = async (req, res) => {
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
   if (String(video.owner) !== String(_id)) {
+    req.flash("error", "You are not the owner of the video");
     return res.status(403).redirect("/");
   }
   // video.title = title;
@@ -117,9 +119,9 @@ export const postUpload = async (req, res) => {
   } = req.session;
   // const { path: videoUrl } = req.file; //bring path from req.file and name as videoUrl
   const { video, thumb } = req.files;
-  console.log(video[0]);
-  console.log(video[0].path);
-  console.log(thumb[0].path);
+  // console.log(video[0]);
+  // console.log(video[0].path);
+  // console.log(thumb[0].path);
   const { title, description, hashtags } = req.body;
   // const video = new Video({
   // });

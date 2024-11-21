@@ -3,6 +3,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
@@ -14,13 +15,12 @@ const app = express(); //app as name is convention
 
 const loggerMiddleware = morgan("dev");
 
-
 // Set security headers to enable SharedArrayBuffer
 app.use((req, res, next) => {
   res.header("Cross-Origin-Embedder-Policy", "require-corp");
   res.header("Cross-Origin-Opener-Policy", "same-origin");
   next();
-});//ffmpeg
+}); //ffmpeg
 
 //view === like html. what user see
 app.set("view engine", "pug"); //view engine
@@ -28,8 +28,6 @@ app.set("views", process.cwd() + "/src/views"); //setting route that views is in
 //middleware
 app.use(loggerMiddleware);
 app.use(express.urlencoded({ extended: true })); //help understanding to transform form value into JS value
-
-
 
 //session middleware => remembering everything
 app.use(
@@ -46,6 +44,7 @@ app.use(
   })
 );
 //session ID will be saved in cookie and send it to browser
+app.use(flash());
 app.use(localsMiddleware);
 //router
 app.use("/uploads", express.static("uploads")); //expose folder

@@ -165,6 +165,7 @@ export const finishGithubLogin = async (req, res) => {
 //==============================================================
 export const logout = (req, res) => {
   req.session.destroy();
+  req.flash("info", "Bye Bye");
   return res.redirect("/");
 };
 //==============================================================
@@ -233,6 +234,7 @@ export const postEditProfile = async (req, res) => {
 //==============================================================
 export const getChangePassword = (req, res) => {
   if (req.session.user.githubLoginOnly === true) {
+    req.flash("error","Can't change password.");
     return res.redirect("/");
   }
   return res.render("users/change-password", { pageTitle: "Change Password" });
@@ -264,7 +266,8 @@ export const postChangePassword = async (req, res) => {
   user.password = newPassword;
   await user.save(); //await: so that you wait until the hashed password updated in User then move to next step
   req.session.user.password = user.password;
-
+  req.flash("info", " Password updated!");
+  // return res.redirect("/users/logout");
   return res.redirect("/users/edit");
 };
 //==============================================================
@@ -272,9 +275,11 @@ export const postChangePassword = async (req, res) => {
 
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await (await User.findById(id)).populate({
-    path:"videos",
-    populate:{
+  const user = await (
+    await User.findById(id)
+  ).populate({
+    path: "videos",
+    populate: {
       path: "owner",
       model: "User",
     },
