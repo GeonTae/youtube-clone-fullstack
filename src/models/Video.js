@@ -12,11 +12,12 @@ const videoSchema = new mongoose.Schema({
   //   title: String, description: String, createdAt: Date,
   title: { type: String, required: true, trim: true, maxLength: 80 },
   videoUrl: { type: String, required: true },
+  thumbUrl: { type: String, required: true },
   description: {
     type: String,
     required: true,
     trim: true,
-    minLength: 20,
+    minLength: 2,
     maxLength: 140,
   },
   createdAt: { type: Date, required: true, default: Date.now },

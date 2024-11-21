@@ -14,12 +14,23 @@ const app = express(); //app as name is convention
 
 const loggerMiddleware = morgan("dev");
 
+
+// Set security headers to enable SharedArrayBuffer
+app.use((req, res, next) => {
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+});//ffmpeg
+
 //view === like html. what user see
 app.set("view engine", "pug"); //view engine
 app.set("views", process.cwd() + "/src/views"); //setting route that views is in src
 //middleware
 app.use(loggerMiddleware);
 app.use(express.urlencoded({ extended: true })); //help understanding to transform form value into JS value
+
+
+
 //session middleware => remembering everything
 app.use(
   session({
