@@ -28,6 +28,8 @@ app.set("views", process.cwd() + "/src/views"); //setting route that views is in
 //middleware
 app.use(loggerMiddleware);
 app.use(express.urlencoded({ extended: true })); //help understanding to transform form value into JS value
+app.use(express.json()); // for understanding comment text 
+//express.json => express takes string and turn into JS format
 
 //session middleware => remembering everything
 app.use(

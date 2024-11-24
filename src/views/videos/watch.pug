@@ -6,7 +6,7 @@ block content
     //- h3 #{video.vie(ws} #{video.views === 1 ? "view" : "views" }
     div#videoContainer(data-id=video._id)
         //- video(src="/"+video.videoUrl, controls, autoplay,  style="width: 50%;")
-        video(src="/"+video.videoUrl, autoplay)
+        video(src="/"+video.videoUrl, autoplay, style="width: 50%;")
         div#videoControls.videoControls
             div.videoControls__play
                 span#play.videoControls__playBtn
@@ -25,22 +25,36 @@ block content
                 span#fullScreen
                     i.fa-solid.fa-expand
 
-    //-
-        div
-            p=video.description
-            small=video.createdAt
-        div 
-            small Uploaded by 
-                a(href=`/users/${video.owner._id}`) #{video.owner.name}
-
+    div.video__data
+        p.video__title=video.title
+        small.video__owner Uploaded by 
+            a(href=`/users/${video.owner._id}`) #{video.owner.name}
+        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("en", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
         //- only for owner of the video
         if String(video.owner._id) === String(loggedInUser._id) 
             a(href=`${video.id}/edit`) Edit video &rarr;
             br
             a(href=`${video.id}/delete`) Delete video &rarr;
+
         //-  &rarr: right arrow, &larr: left arrow
         //-  relative url: edit => videos/edit 
         //-  absolute url: /edit => /edit
+    
+    if loggedIn
+        div.video__add-comments
+            form.video__comment-form#commentForm
+                textarea#textarea(cols="30", rows="10", placeholder="Write a nice comment...")
+                button Add Comment
+    div.video__comments
+        ul
+            each comment in video.comments.reverse()
+                li.video__comment(data-id=comment.id)
+                    i.fa-solid.fa-comment
+                    span  #{comment.text}
+                    span  ❌
+
 
 block scripts 
     script(src="/static/js/videoPlayer.js")
+    if loggedIn
+        script(src="/static/js/commentSection.js")

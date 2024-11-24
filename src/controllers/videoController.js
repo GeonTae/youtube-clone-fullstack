@@ -1,6 +1,6 @@
-import { format } from "morgan";
 import Video from "../models/Video";
 import User from "../models/User";
+import Comment from "../models/Comment";
 
 //home router
 //=======================================================
@@ -23,7 +23,7 @@ export const watch = async (req, res) => {
   // const id =req.params.id;
   const { id } = req.params; //from url id
   // console.log("show video:", id);
-  const video = await (await Video.findById(id)).populate("owner");
+  const video = await Video.findById(id).populate("owner").populate("comments");
   // this populate segment the User info into the Video info, not just as User id
   // const owner = await User.findById(video.owner);
   console.log(video);
@@ -85,7 +85,7 @@ export const postEditVideo = async (req, res) => {
     hashtags: Video.formatHashtags(hashtags),
   });
   // await video.save();
-  req.flash("success", "Changed saved.")
+  req.flash("success", "Changed saved.");
   return res.redirect(`/videos/${id}`); //goto the website again
 };
 
@@ -199,6 +199,26 @@ export const registerView = async (req, res) => {
   video.meta.views = video.meta.views + 1;
   await video.save();
   return res.sendStatus(200);
+};
+
+export const createComment = async (req, res) => {
+  const {
+    session: { user }, //user info
+    body: { text }, //comment
+    params: { id }, //video id
+  } = req;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  const comment = await Comment.create({
+    text,
+    owner: user._id,
+    video: id,
+  });
+  video.comments.push(comment._id);
+  video.save();
+  return res.sendStatus(201);
 };
 
 //home router

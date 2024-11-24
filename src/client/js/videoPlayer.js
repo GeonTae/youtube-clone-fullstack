@@ -8,6 +8,7 @@ const timeline = document.getElementById("timeline");
 const fullScreenBtn = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
+const textarea = document.getElementById("textarea");
 //icon
 const playBtnIcon = playBtn.querySelector("i");
 const muteBtnIcon = muteBtn.querySelector("i");
@@ -135,24 +136,26 @@ const changeVideoTime = (seconds) => {
 
 queueMicrotask;
 const handlePressKey = (event) => {
-  if (event.key === "m") {
-    handleMuteClick();
-  }
   const fullScreenCheck = document.fullscreenElement;
-  if (!fullScreenCheck && event.key === "f") {
-    handleFullScreen();
+  if (event.target !== textarea) {
+    if (event.key === "m") {
+      handleMuteClick();
+    }
+    if (!fullScreenCheck && event.key === "f") {
+      handleFullScreen();
+    }
+    if (event.code === "Space") {
+      handlePlayClick();
+    }
+    if (event.code === "ArrowRight") {
+      changeVideoTime(5);
+    }
+    if (event.code === "ArrowLeft") {
+      changeVideoTime(-5);
+    }
   }
   if (fullScreenCheck && event.code === "Esc") {
     handleFullScreen();
-  }
-  if (event.code === "Space") {
-    handlePlayClick();
-  }
-  if (event.code === "ArrowRight") {
-    changeVideoTime(5);
-  }
-  if (event.code === "ArrowLeft") {
-    changeVideoTime(-5);
   }
 };
 
