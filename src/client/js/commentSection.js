@@ -72,9 +72,3 @@ const deleteIcons = document.querySelectorAll(".comment_delete");
 deleteIcons.forEach((icon) => {
   icon.addEventListener("click", handleDelete);
 });
-
-// //herererere
-// const response = await fetch(`/api/comments/${commentId}`, {
-//   method: "DELETE",
-// });
-// r.delete("/deded", fn)
