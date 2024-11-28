@@ -51,7 +51,8 @@ block content
                 li.video__comment(data-id=comment.id)
                     i.fa-solid.fa-comment
                     span  #{comment.text}
-                    span  ❌
+                    if String(comment.owner._id) === String(loggedInUser._id)
+                        span.comment_delete  ❌
 
 
 block scripts 

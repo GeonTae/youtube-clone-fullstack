@@ -218,7 +218,47 @@ export const createComment = async (req, res) => {
   });
   video.comments.push(comment._id);
   video.save();
-  return res.sendStatus(201);
+  // return res.sendStatus(201);
+  return res.status(201).json({ newCommentId: comment._id }); //json: to send new id to frontend (commentSection.js)
+};
+
+export const deleteComment = async (req, res) => {
+  const {
+    params: { id }, // Comment ID
+    session: { user }, // Logged in user
+  } = req;
+
+  const comment = await Comment.findById(id);
+  if (!comment) {
+    return res.sendStatus(404); // Comment not found
+  }
+  // Check if the logged in user is the owner of the comment
+  if (String(comment.owner) !== String(user._id)) {
+    req.flash("error", "You are not the owner of the video");
+    return res.status(403);
+  }
+
+  // Delete the comment from the database
+  await Comment.findByIdAndDelete(id);
+
+  // Remove the comment reference from the associated video
+  const video = await Video.findById(comment.video);
+  if (video) {
+    video.comments = video.comments.filter(
+      (commentId) => String(commentId) !== id
+    );
+    await video.save();
+  }
+  // Remove the comment reference from the user's database
+  const commentOwner = await User.findById(comment.owner);
+  if (commentOwner) {
+    commentOwner.comments = commentOwner.comments.filter(
+      (commentId) => String(commentId) !== id
+    );
+    await commentOwner.save();
+  }
+
+  return res.sendStatus(200); // Successful deletion
 };
 
 //home router
