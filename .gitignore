@@ -10,3 +10,6 @@ quiz.md
 package_copy.json
 recorder_old_ffmpeg.js
 build
+fly.toml
+.github
+workflows
