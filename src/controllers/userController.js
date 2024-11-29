@@ -173,6 +173,7 @@ export const logout = (req, res) => {
 export const getEditProfile = (req, res) => {
   return res.render("users/edit-profile", { pageTitle: "Edit Profile" });
 };
+
 export const postEditProfile = async (req, res) => {
   const {
     session: {
@@ -183,7 +184,7 @@ export const postEditProfile = async (req, res) => {
   } = req;
   // === const user = req.session.user.id;
 
-  console.log(file);
+  // console.log(file);
 
   const pageTitle = "Edit Profile";
   try {
@@ -211,7 +212,8 @@ export const postEditProfile = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
       {
-        avatarUrl: file ? file.path : avatarUrl, // if uploaded avatar file exists then give file path, if it doesn't, use old avatar
+        // avatarUrl: file ? file.path : avatarUrl,
+        avatarUrl: file ? file.location : avatarUrl, // if uploaded avatar file exists then give file path, if it doesn't, use old avatar
         name,
         email,
         username,
@@ -219,6 +221,7 @@ export const postEditProfile = async (req, res) => {
       },
       { new: true }
     );
+    console.log(updatedUser.avatarUrl);
     req.session.user = updatedUser;
     // req.session.user = { ...req.session.user, name, email, username, location }; //also have to update on session for frontend
     //...req.session.user is to put original info first so that it can cover other info that was not offered by Edit-profile page
@@ -287,7 +290,7 @@ export const see = async (req, res) => {
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
-
+  // console.log(user.videos);
   // const videos = await Video.find({ owner: user._id });
 
   return res.render("users/profile", {

@@ -1,22 +1,22 @@
 //Config
-@import "./config/_variables";
-@import "./config/_reset";
+@use "./config/variables" as *;
+@use "./config/reset" as *;
 
 //Components
-@import "./components/header.scss";
-@import "./components/footer.scss";
-@import "./components/video.scss";
-@import "./components/shared.scss";
-@import "./components/forms.scss";
-@import "./components/social-login.scss";
-@import "./components/video-player.scss";
+@use "./components/header" as *;
+@use "./components/footer" as *;
+@use "./components/video" as *;
+@use "./components/shared" as *;
+@use "./components/forms" as *;
+@use "./components/social-login" as *;
+@use "./components/video-player" as *;
 
 //Screens
-@import "./screens/search.scss";
-@import "./screens/profile.scss";
-@import "./screens/edit-profile.scss";
-@import "./screens/upload.scss";
-@import "./screens/watch.scss";
+@use "./screens/search" as *;
+@use "./screens/profile" as *;
+@use "./screens/edit-profile" as *;
+@use "./screens/upload" as *;
+@use "./screens/watch" as *;
 //Defaults
 a {
   color: inherit;

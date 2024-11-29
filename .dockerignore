@@ -1,0 +1,12 @@
+.env
+.DS_Store
+node_modules
+practice
+uploads
+note.md
+assets
+data
+quiz.md
+package_copy.json
+recorder_old_ffmpeg.js
+build

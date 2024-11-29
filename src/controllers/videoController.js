@@ -114,9 +114,11 @@ export const postUpload = async (req, res) => {
     const newVideo = await Video.create({
       title,
       description,
-      videoUrl: video[0].path,
-      thumbUrl: thumb[0].path,
-      // thumbUrl: thumb[0].path.replace(/[\\]/g, "/"), // in window os
+      videoUrl: video[0].location,
+      thumbUrl: thumb[0].location,
+      // videoUrl: video[0].path,
+      // thumbUrl: thumb[0].path,
+
       owner: _id,
       hashtags: Video.formatHashtags(hashtags),
       meta: {
@@ -211,13 +213,20 @@ export const createComment = async (req, res) => {
   if (!video) {
     return res.sendStatus(404);
   }
+  // Create the comment
   const comment = await Comment.create({
     text,
     owner: user._id,
     video: id,
   });
+  // Add the comment ID to the video
   video.comments.push(comment._id);
-  video.save();
+  await video.save();
+
+  // Add the comment ID to the user's comments array
+  const loggedInUser = await User.findById(user._id);
+  loggedInUser.comments.push(comment._id);
+  await loggedInUser.save();
   // return res.sendStatus(201);
   return res.status(201).json({ newCommentId: comment._id }); //json: to send new id to frontend (commentSection.js)
 };
