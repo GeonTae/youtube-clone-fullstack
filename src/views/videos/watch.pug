@@ -6,7 +6,7 @@ block content
     //- h3 #{video.vie(ws} #{video.views === 1 ? "view" : "views" }
     div#videoContainer(data-id=video._id)
         //- video(src="/"+video.videoUrl, controls, autoplay,  style="width: 50%;")
-        video(src="/"+video.videoUrl, autoplay, style="width: 50%;")
+        video(src=video.videoUrl, autoplay, style="width: 50%;", crossorigin="anonymous")
         div#videoControls.videoControls
             div.videoControls__play
                 span#play.videoControls__playBtn
