@@ -17,7 +17,7 @@ input[type="submit"] {
   padding: 15px 20px;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background-color: black;
+  background-color: #8fa679;
   margin-bottom: 5px;
   font-size: 16px;
   color: white;
@@ -32,7 +32,7 @@ input[type="submit"],
   border-radius: 5px;
   padding: 12px 20px;
   background-color: white !important;
-  color: rgba($color: $red, $alpha: 1) !important;
+  color: rgba($color: burlywood, $alpha: 1) !important;
   text-align: center !important;
   cursor: pointer;
   display: block;
@@ -44,4 +44,14 @@ input[type="submit"],
     opacity: 0.5;
     pointer-events: none;
   }
+}
+
+.video__comment-form {
+  display: flex;
+  flex-direction: column;
+}
+.comment-button {
+  color: rgba($color: burlywood, $alpha: 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #8fa679;
 }
